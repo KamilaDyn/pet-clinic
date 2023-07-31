@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Dinna",
+    "serviceNames": ["Prophylaxis", "Surgery"],
+    "image": {
+      "fileName": "woman-888389_1280.jpg",
+      "authorName": "yamabsm",
+      "platformLink": "https://cdn.pixabay.com/photo/2015/08/14/12/55/woman-888389_1280.jpg",
+      "platformName": "Pixabay",
+      "authorLink": "https://pixabay.com/pl/users/yamabsm-1300729/"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Anna",
+    "serviceNames": ["Prophylaxis", "Surgery"],
+    "image": {
+      "fileName": "random-woman.jpg",
+      "authorName": "Petfoto",
+      "platformLink": "https://cdn.pixabay.com/photo/2023/07/08/16/38/dog-8114772_1280.jpg",
+      "platformName": "Pixabay",
+      "authorLink": "https://pixabay.com/pl/users/petfoto-34205568/"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Mikel",
+    "serviceNames": ["Prophylaxis", "Surgery", "Dermatology"],
+    "image": {
+      "fileName": "randomMan.jpg",
+      "authorName": "alatyren",
+      "platformLink": "https://cdn.pixabay.com/photo/2013/08/25/08/02/dog-and-man-175549_1280.jpg",
+      "platformName": "Pixabay",
+      "authorLink": "https://pixabay.com/pl/users/alatyren-49994/"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Thomas",
+    "serviceNames": ["Prophylaxis"],
+    "image": {
+      "fileName": "random-man2.jpg",
+      "authorName": "michelle_raponi",
+      "platformLink": "https://cdn.pixabay.com/photo/2016/03/26/20/35/elder-man-1281284_1280.jpg",
+      "platformName": "Pixabay",
+      "authorLink": "https://pixabay.com/pl/users/michelle_raponi-165491/"
+    }
+  }
+]

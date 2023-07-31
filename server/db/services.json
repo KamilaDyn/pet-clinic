@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "name": "Prophylaxis",
+    "durationInMinutes": 60,
+    "image": {
+      "fileName": "prophylaxis.jpg",
+      "authorName": "joy617",
+      "authorLink": "https://pixabay.com/users/joy617-933792/",
+      "platformName": "Pixabay",
+      "platformLink": "https://cdn.pixabay.com/photo/2015/07/07/01/54/dog-833957_1280.jpg"
+    },
+    "description": "Prophylactic health examination of animals."
+  },
+  {
+    "id": 2,
+    "name": "Surgery",
+    "durationInMinutes": 30,
+    "image": {
+      "fileName": "surgery.jpg",
+      "authorName": "PublicDomainPictures",
+      "authorLink": "https://pixabay.com/users/publicdomainpictures-14/",
+      "platformName": "Pixabay",
+      "platformLink": "https://cdn.pixabay.com/photo/2012/02/29/15/43/cat-19106_1280.jpg"
+    },
+    "description": "Orthopaedics (bones, joints, muscles), soft tissue surgery (skin, body cavities, cardiovascular system, GI/urogenital/respiratory tracts), and neurosurgery."
+  },
+  {
+    "id": 3,
+    "name": "Dermatology",
+    "durationInMinutes": 15,
+    "image": {
+      "fileName": "dermatology.jpg",
+      "authorName": "Katrina_S",
+      "authorLink": "https://pixabay.com/users/katrina_s-5565009/",
+      "platformName": "Pixabay",
+      "platformLink": "https://cdn.pixabay.com/photo/2017/06/17/00/49/dog-2410875_1280.jpg"
+    },
+    "description": "Topical treatments (which are applied to the skin) such as ointments or shampoos, as well as medications given by mouth or via injections."
+  }
+]
