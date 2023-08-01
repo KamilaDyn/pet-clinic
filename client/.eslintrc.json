@@ -15,9 +15,6 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
-    // "project": ["/tsconfig.json"] // Specify it only for TypeScript files,
-    // "project": ["tsconfig.json"]
-    // "project": "./tsconfig.json"
   },
   "plugins": ["@typescript-eslint", "react"],
   "rules": {

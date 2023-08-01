@@ -1,16 +1,28 @@
 import { styled } from "styled-components";
 
-export const Wrapper = styled.div`
-  position: relative;
-`;
-export const ImageWrapper = styled.div`
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1;
-`;
+export const Wrapper = styled.div({
+  position: "relative",
+  "&:after": {
+    content: "''",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "#fff",
+    opacity: 0.5,
+    zIndex: -1,
+  },
+});
+
+export const ImageWrapper = styled.div({
+  position: "absolute",
+  height: "100vh",
+  width: "100vw",
+  top: 0,
+  left: 0,
+  zIndex: -1,
+});
 
 export const TextWrapper = styled.div({
   display: "flex",

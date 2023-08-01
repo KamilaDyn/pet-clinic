@@ -4,7 +4,7 @@ export const Title = styled.h2(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "clamp(2rem, 5vmin, 4rem)",
   textAlign: "center",
-  marginBottom: "clamp(2rem, 10vmin, 4rem)",
+  paddingBottom: "10px",
   position: "relative",
   "&:after": {
     content: "''",

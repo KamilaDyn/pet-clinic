@@ -1,15 +1,21 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-const Box = styled.div(({ theme }) => ({
+const Wrapper = styled.div(({ theme }) => ({
   display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   width: "100%",
   height: "20%",
   maxHeight: "80px",
-  padding: "clamp(1rem, 3vmin, 2rem)",
   backgroundColor: theme.colors.green600,
-  marginBottom: "clamp(1.5rem, 5vmin, 3rem)",
+  padding: "clamp(1rem, 3vmin, 2rem)",
+  paddingBottom: "clamp(1.5rem, 5vmin, 3rem)",
 }));
+
+const Box = styled.div({
+  display: "flex",
+});
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -25,4 +31,18 @@ const StyledLink = styled(Link)`
   }
 `;
 
-export { Box, StyledLink };
+const LoginButton = styled.button(({ theme }) => ({
+  backgroundColor: "#fff",
+  border: `1px solid ${theme.colors.brown600}`,
+  color: theme.colors.green600,
+  marginLeft: "2rem",
+  width: "100px",
+  padding: "1rem",
+  textAlign: "center",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontSize: "1rem",
+  fontWeight: "bold",
+}));
+
+export { Box, LoginButton, StyledLink, Wrapper };

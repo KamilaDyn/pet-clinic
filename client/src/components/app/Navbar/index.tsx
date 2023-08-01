@@ -1,12 +1,12 @@
 import { ReactElement, ReactNode } from "react";
-import { Box, StyledLink } from "./Navbar.style";
+import { Box, LoginButton, StyledLink, Wrapper } from "./Navbar.style";
 import Services from "assets/icons/services.png";
 import Staff from "assets/icons/staff.png";
+import { useNavigate } from "react-router-dom";
 
 const NavLink = ({ to, children }: { to: string; children: ReactNode }) => (
   <StyledLink to={to}>{children}</StyledLink>
 );
-const Icon = {};
 
 const Img = ({ srcImg }: { srcImg: string }) => {
   return (
@@ -21,16 +21,20 @@ const Img = ({ srcImg }: { srcImg: string }) => {
 };
 
 export default function Navbar(): ReactElement {
+  const navigate = useNavigate();
   return (
-    <Box>
-      <NavLink to="/services">
-        <Img srcImg={Services} />
-        Services
-      </NavLink>
-      <NavLink to="/staff">
-        <Img srcImg={Staff} />
-        Staff
-      </NavLink>
-    </Box>
+    <Wrapper>
+      <Box>
+        <NavLink to="/services">
+          <Img srcImg={Services} />
+          Services
+        </NavLink>
+        <NavLink to="/staff">
+          <Img srcImg={Staff} />
+          Staff
+        </NavLink>
+      </Box>
+      <LoginButton onClick={() => navigate("/sign-in")}>Login</LoginButton>
+    </Wrapper>
   );
 }
