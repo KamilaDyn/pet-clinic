@@ -2,18 +2,23 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { AppRoutes } from "./Routes";
 import Navbar from "./Navbar";
 import Theme from "theme";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "react-query/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 function App() {
+  const isDevelopmentEnv = process.env.NODE_ENV === "development";
+
   return (
-    <Theme>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient} contextSharing={true}>
+      <Theme>
         <Router>
           <Navbar />
           <AppRoutes />
         </Router>
-      </QueryClientProvider>
-    </Theme>
+      </Theme>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

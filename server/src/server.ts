@@ -6,7 +6,12 @@ import userRoutes from "./route-methods/user";
 import dotenv from "dotenv";
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(json());
 
 dotenv.config();

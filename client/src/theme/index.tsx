@@ -1,6 +1,6 @@
 import { ThemeProvider } from "styled-components";
 
-const theme = {
+export const theme = {
   colors: {
     brown600: "hsl(3, 17%, 44%)",
     brown100: "hsl(3, 17%, 87%)",

@@ -23,4 +23,19 @@ export function generateQueryClient(): QueryClient {
     },
   });
 }
-export const queryClient = generateQueryClient();
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      onError: queryErrorHandler,
+      staleTime: 600000,
+      cacheTime: 900000,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    },
+    mutations: {
+      onError: queryErrorHandler,
+    },
+  },
+});

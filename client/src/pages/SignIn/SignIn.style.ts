@@ -1,6 +1,7 @@
+import { ThemeProps } from "shared/types";
 import { styled } from "styled-components";
 
-const Wrapper = styled.div(({ theme }) => ({
+const Wrapper = styled.div<ThemeProps>(({ theme }) => ({
   backgroundColor: theme.colors.brown100,
   width: "100%",
   height: "100%",
@@ -10,7 +11,7 @@ const Wrapper = styled.div(({ theme }) => ({
   alignItems: "center",
   rowGap: "2rem",
 }));
-const Card = styled.div(({ theme }) => ({
+const Card = styled.div<ThemeProps>(({ theme }) => ({
   border: `1px solid ${theme.colors.green600}`,
   backgroundColor: "#fff",
   width: "70%",
@@ -20,7 +21,7 @@ const Card = styled.div(({ theme }) => ({
   borderRadius: "15px",
 }));
 
-const Button = styled.button(({ theme }) => ({
+const Button = styled.button<ThemeProps>(({ theme }) => ({
   padding: "0.5rem 0.8rem",
   fontSize: "1rem",
   border: "none",
@@ -28,6 +29,11 @@ const Button = styled.button(({ theme }) => ({
   backgroundColor: theme.colors.green600,
   color: "#ffffff",
   cursor: "pointer",
+  width: "100%",
 }));
 
-export { Button, Card, Wrapper };
+const Box = styled.div({
+  paddingBlock: "1.5rem",
+  textAlign: "center",
+});
+export { Button, Box, Card, Wrapper };
