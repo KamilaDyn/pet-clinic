@@ -1,8 +1,6 @@
 import { log } from "console";
 import { NewUser } from "../../shared/types";
 import { AuthUser, NewAuthUser } from "../src/types";
-import { resolve } from "path";
-//get a reference to the filepath module
 const fs = require("fs");
 
 export enum filenames {
@@ -13,8 +11,6 @@ type JsonDataType = AuthUser;
 function jsonReader<ItemType extends JsonDataType>(
   filePath: filenames
 ): Promise<ItemType[]> {
-  // const data = await fs.readFile(filePath);
-  // return JSON.parse(data.toString());
   return new Promise((resolve, reject) =>
     fs.readFile(filePath, "utf8", (err, fileData) => {
       if (err) {

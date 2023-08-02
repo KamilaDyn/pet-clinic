@@ -1,22 +1,16 @@
 import { Request, Response } from "express";
-import users from "../../db/users.json";
 import db from "../../db-function";
-import { createJWT, hashPassword } from "../auth";
-import { AuthUser, PasswordHash } from "../types";
+import { createJWT, hashPassword, passwordIsValid } from "../auth";
+import { AuthUser } from "../types";
 import { User } from "../../../shared/types";
 
-async function auth(request: Request, response: Response) {
-  const { email, password } = request.body;
-  const users = await db.getUsers();
-  // console.log(users);
-}
 function removePasswordAndAddToken(user: AuthUser): User {
   const { salt, keylen, iterations, hash, digest, ...cleanUser } = user;
   const token = createJWT(cleanUser);
   return { ...cleanUser, token };
 }
 
-async function create(request: Request, response: Response) {
+async function create(request: Request, response: Response): Promise<Response> {
   try {
     const { email, password } = request.body;
     console.log(request.body);
@@ -36,4 +30,22 @@ async function create(request: Request, response: Response) {
     return response.status(500).json({ message: `could not add user: ${e} ` });
   }
 }
+async function auth(request: Request, response: Response): Promise<Response> {
+  const { email, password } = request.body;
+  const users = await db.getUsers();
+  const validUser = users.reduce(
+    (foundUser: AuthUser | null, user) =>
+      user.email === email && passwordIsValid(password, user)
+        ? user
+        : foundUser,
+    null
+  );
+
+  if (!validUser)
+    return response.status(400).json({ message: "Invalid login" });
+  const user = removePasswordAndAddToken(validUser);
+
+  return response.status(200).json({ user });
+}
+
 export default { auth, create };
