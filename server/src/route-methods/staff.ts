@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import staff from "../../db/staff.json";
+import db from "../../db-function";
 
 export async function get(req: Request, res: Response): Promise<Response> {
   try {
