@@ -31,7 +31,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const LoginButton = styled.button(({ theme }) => ({
+const Button = styled.button(({ theme }) => ({
   backgroundColor: "#fff",
   border: `1px solid ${theme.colors.brown600}`,
   color: theme.colors.green600,
@@ -45,4 +45,4 @@ const LoginButton = styled.button(({ theme }) => ({
   fontWeight: "bold",
 }));
 
-export { Box, LoginButton, StyledLink, Wrapper };
+export { Box, Button, StyledLink, Wrapper };

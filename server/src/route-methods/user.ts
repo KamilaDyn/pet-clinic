@@ -4,7 +4,6 @@ import { createJWT, hashPassword, passwordIsValid } from "../auth";
 import { AuthUser } from "../types";
 import { User } from "../../../shared/types";
 import jsonwebtoken from "jsonwebtoken";
-const jwt = require("jsonwebtoken");
 
 function removePasswordAndAddToken(user: AuthUser): User {
   const { salt, keylen, iterations, hash, digest, ...cleanUser } = user;
@@ -51,12 +50,8 @@ async function auth(request: Request, response: Response): Promise<Response> {
   return response.status(200).json({ user });
 }
 
-async function authMe(
-  request: Request,
-  response: Response,
-  next: NextFunction
-) {
-  const token = request.header("Authorization")?.replace("bearer ", "");
+async function authMe(request: Request, response: Response) {
+  const token = request.header("Authorization")?.replace("Bearer ", "");
 
   if (!token) {
     return response.status(403).json({ message: "Access danied" });
@@ -68,7 +63,6 @@ async function authMe(
   } catch (err) {
     return response.status(401).json({ message: "Invalid token" });
   }
-  next();
 }
 
 export default { auth, create, authMe };

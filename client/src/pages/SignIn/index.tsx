@@ -1,18 +1,22 @@
 import { Header, InputLabel } from "components/common";
 import { Box, Button, Card, Wrapper } from "./SignIn.style";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useContext } from "react";
 import { useAuth } from "auth/useAuth";
+import { useUser } from "./user/useUser";
+import { AuthContext } from "context/user-context";
+import { Navigate } from "react-router-dom";
 
 interface UserData {
   email: string;
   password: string;
 }
 export default function SignIn() {
-  const { signUserIn } = useAuth();
+  const { signInMutation } = useAuth();
+  const { user } = useContext(AuthContext);
 
   const [userData, setUserData] = useState<UserData>({
-    email: "",
-    password: "",
+    email: "test01",
+    password: "test123",
   });
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -22,8 +26,13 @@ export default function SignIn() {
   }
   function submitHandler(e: FormEvent) {
     e.preventDefault();
-    signUserIn(userData);
+
+    signInMutation(userData);
   }
+  if (user) {
+    return <Navigate to="/services" />;
+  }
+
   return (
     <Wrapper>
       <Header title="Sign in to your account" />

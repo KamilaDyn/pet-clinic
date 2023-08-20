@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { Home, Services, SignIn, Staff } from "pages";
 

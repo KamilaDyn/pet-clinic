@@ -1,8 +1,10 @@
-import { ReactElement, ReactNode } from "react";
-import { Box, LoginButton, StyledLink, Wrapper } from "./Navbar.style";
+import { ReactElement, ReactNode, useContext } from "react";
+import { Box, Button, StyledLink, Wrapper } from "./Navbar.style";
 import Services from "assets/icons/services.png";
 import Staff from "assets/icons/staff.png";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "pages/SignIn/user/useUser";
+import { AuthContext } from "context/user-context";
 
 const NavLink = ({ to, children }: { to: string; children: ReactNode }) => (
   <StyledLink to={to}>{children}</StyledLink>
@@ -20,8 +22,20 @@ const Img = ({ srcImg }: { srcImg: string }) => {
   );
 };
 
-export default function Navbar(): ReactElement {
+const AuthBtn = () => {
+  const { user } = useContext(AuthContext);
+  const { logoutUser, isLoading } = useUser();
   const navigate = useNavigate();
+  if (isLoading) {
+    return null;
+  }
+  if (user) {
+    return <Button onClick={logoutUser}> Logout</Button>;
+  }
+  return <Button onClick={() => navigate("/sign-in")}> Login</Button>;
+};
+
+export default function Navbar(): ReactElement {
   return (
     <Wrapper>
       <Box>
@@ -34,7 +48,9 @@ export default function Navbar(): ReactElement {
           Staff
         </NavLink>
       </Box>
-      <LoginButton onClick={() => navigate("/sign-in")}>Login</LoginButton>
+      {/* {!user && <Button onClick={() => navigate("/sign-in")}>Login</Button>} */}
+      {/* <Button onClick={handleAuth}> {user ? "Logout" : "Login"}</Button> */}
+      <AuthBtn />
     </Wrapper>
   );
 }
