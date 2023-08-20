@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { axiosInstance } from "axiosInstance";
 import { useUser } from "pages/SignIn/user/useUser";
+import { setTokenUser } from "user-storage";
 
 export function useAuth() {
   const { updateUser } = useUser();
@@ -23,6 +24,7 @@ export function useAuth() {
       }
 
       updateUser(data.user);
+      setTokenUser(data.user.token);
     } catch (err) {
       console.log(err);
     }
