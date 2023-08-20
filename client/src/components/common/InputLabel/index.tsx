@@ -5,10 +5,12 @@ interface InputLabelProps {
   label: string;
   type: string;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  name: string;
 }
 export default function InputLabel({
   label,
   type,
+  name,
   handleChange,
 }: InputLabelProps) {
   return (
@@ -16,7 +18,7 @@ export default function InputLabel({
       <label htmlFor={label}>
         {label} <span style={{ color: "red" }}>*</span>
       </label>
-      <Input id={label} type={type} name={label} onChange={handleChange} />
+      <Input id={label} type={type} name={name} onChange={handleChange} />
     </Box>
   );
 }

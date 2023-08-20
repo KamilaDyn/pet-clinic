@@ -1,10 +1,11 @@
 import { Header, InputLabel } from "components/common";
-import { Box, Button, Card, Wrapper } from "./SignIn.style";
+import { Box } from "./SignIn.style";
 import { ChangeEvent, FormEvent, useState, useContext } from "react";
 import { useAuth } from "auth/useAuth";
-import { useUser } from "./user/useUser";
 import { AuthContext } from "context/user-context";
 import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button, Card, Wrapper } from "pages/shared";
 
 interface UserData {
   email: string;
@@ -13,7 +14,7 @@ interface UserData {
 export default function SignIn() {
   const { signInMutation } = useAuth();
   const { user } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const [userData, setUserData] = useState<UserData>({
     email: "test01",
     password: "test123",
@@ -38,9 +39,15 @@ export default function SignIn() {
       <Header title="Sign in to your account" />
       <Card>
         <form onSubmit={submitHandler}>
-          <InputLabel label="email" type="text" handleChange={handleChange} />
           <InputLabel
-            label="password"
+            name="email"
+            label="Email"
+            type="text"
+            handleChange={handleChange}
+          />
+          <InputLabel
+            name="Password"
+            label="Password"
             type="password"
             handleChange={handleChange}
           />
@@ -49,7 +56,7 @@ export default function SignIn() {
         <Box>
           <p>Dont you have account?</p>
         </Box>
-        <Button>Sign Up</Button>
+        <Button onClick={() => navigate("/sign-up")}>Sign Up</Button>
       </Card>
     </Wrapper>
   );

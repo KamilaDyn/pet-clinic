@@ -1,10 +1,8 @@
 import { axiosInstance } from "axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { setTokenUser } from "user-storage";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "react-query/constant";
-
-import { useQueryClient } from "@tanstack/react-query";
 
 interface User {
   email: string;
