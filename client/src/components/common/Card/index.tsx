@@ -1,3 +1,7 @@
+import Image from '../Image';
+import { Link } from 'react-router-dom';
+import { CardWrapper, Content, Figure, Title, Span } from './Card.style';
+
 interface CardProps {
   imgSrc: string;
   title: string;
@@ -6,9 +10,6 @@ interface CardProps {
   platformName: string;
   platformLink: string;
 }
-import Image from "../Image";
-import { Link } from "react-router-dom";
-import { CardWrapper, Content, Figure, Title, Span } from "./Card.style";
 
 export default function Card({
   imgSrc,
@@ -28,11 +29,11 @@ export default function Card({
       </Span>
       <div>
         <Title>{title}</Title>
-        {typeof content === "string" ? (
+        {typeof content === 'string' ? (
           <Content>{content}</Content>
         ) : (
           <Content>
-            Specialist: {content.map((value) => value).join(", ")}
+            Specialist: {content.map((value) => value).join(', ')}
           </Content>
         )}
       </div>

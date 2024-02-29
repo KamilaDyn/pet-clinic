@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { createContext } from "react";
-import { User } from "../../../shared/types";
+import { useState } from 'react';
+import { createContext } from 'react';
+import { User } from '../../../shared/types';
 interface UserContext {
   user: User | null;
   getCurrentUser: (user: User | null) => void;

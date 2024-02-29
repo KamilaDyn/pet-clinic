@@ -1,6 +1,7 @@
 export enum QueryKeys {
-  services = "services",
-  staff = "staff",
-  user = "user",
-  me = "me",
+  treatments = 'treatments',
+  staff = 'staff',
+  user = 'user',
+  me = 'me',
+  appointments = 'appointments',
 }

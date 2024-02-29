@@ -1,27 +1,34 @@
-import { useStaff } from "./useStaff";
-import { Card, Header } from "components/common";
-import { FlexBox } from "shared/StyledComponents";
-import { Wrapper } from "./Staff.style";
+import { CardImg, Subtitle, Title } from '@/common/atoms';
+import { Card } from '@/common/molecules';
+import { useStaff } from './useStaff';
 
-export default function Staff() {
-  const staff = useStaff();
+const Staff = () => {
+  const { staff } = useStaff();
 
   return (
-    <Wrapper>
-      <Header title="Meet ours staff" />
-      <FlexBox>
-        {staff.map(({ id, image, name, serviceNames }) => (
-          <Card
-            key={id}
-            imgSrc={image.platformLink}
-            title={name}
-            content={serviceNames}
-            author={image.authorName}
-            platformName={image.platformName}
-            platformLink={image.platformLink}
-          />
+    <div className='container mt-20 mx-auto pb-32'>
+      <Title>Our Staff</Title>
+      <div className='cards grid grid-cols-3 py-24 gap-7 justify-center gap-y-14 '>
+        {staff.map(({ id, image, name, treatmentNames }) => (
+          <Card title={name} key={id}>
+            <>
+              <CardImg src={image.platformLink} alt={image.fileName} />
+
+              <div className='py-3'>
+                <ul>
+                  {treatmentNames.map((value, index) => (
+                    <li className='text-sky-800 ' key={index}>
+                      {value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          </Card>
         ))}
-      </FlexBox>
-    </Wrapper>
+      </div>
+    </div>
   );
-}
+};
+
+export default Staff;

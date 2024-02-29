@@ -1,18 +1,19 @@
-import { QueryKeys } from "react-query/constant";
-import { axiosInstance } from "axiosInstance";
-import { useQuery } from "@tanstack/react-query";
-import { Staff } from "../../../../shared/types";
+import { axiosInstance } from '@/axiosInstance';
+import { QueryKeys } from '@/react-query/constant';
+import { Staff } from '@shared/types';
+import { useQuery } from '@tanstack/react-query';
 
-async function getStaff(): Promise<Staff[]> {
-  const { data } = await axiosInstance.get("/api/staff");
+const getStaff = async (): Promise<Staff[]> => {
+  const { data } = await axiosInstance.get('/staff');
   return data;
-}
+};
+export const useStaff = () => {
+  const fallback: Staff[] = [];
 
-export function useStaff(): Staff[] {
-  const fallback: [] = [];
-  const { data = fallback } = useQuery({
+  const { data: staff = fallback } = useQuery({
     queryKey: [QueryKeys.staff],
     queryFn: getStaff,
   });
-  return data;
-}
+
+  return { staff };
+};

@@ -1,11 +1,13 @@
-const USER_LOCAL_STORAGE_KEY = "userToken";
+import { LoginData } from '@/auth/types';
 
-function getTokenUser(): string | null {
+const USER_LOCAL_STORAGE_KEY = 'user_data';
+
+function getTokenUser(): LoginData | null {
   const storedUser = localStorage.getItem(USER_LOCAL_STORAGE_KEY);
   return storedUser ? JSON.parse(storedUser) : null;
 }
 
-function setTokenUser(token: string): void {
+function setTokenUser(token: LoginData): void {
   window.localStorage.setItem(USER_LOCAL_STORAGE_KEY, JSON.stringify(token));
 }
 
