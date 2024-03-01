@@ -7,6 +7,7 @@ import { axiosInstance } from '@/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import { useLoginData } from '@/auth/AuthContext';
 import { AppointmentDateMap } from '@shared/types';
+import { getAvailableAppointments } from './utils/getAppointments';
 
 async function getAppointment(
   year: string,
@@ -30,10 +31,11 @@ export const useCalendar = () => {
   const selectFn = useCallback(
     (data: AppointmentDateMap, showAll: boolean) => {
       if (showAll) return data;
-      return;
+      return getAvailableAppointments(data, userId);
     },
     [userId]
   );
+
   //update month year
   function updateMonthOfYear(monthIncrement: number): void {
     setMonthOfYear((prevData) => getNewMonthOfYear(prevData, monthIncrement));
@@ -68,5 +70,5 @@ export const useCalendar = () => {
     ...{ staleTime: 0, gcTime: 30000 },
   });
 
-  return { appointments, monthYear, updateMonthOfYear };
+  return { appointments, monthYear, updateMonthOfYear, showAll, setShowAll };
 };

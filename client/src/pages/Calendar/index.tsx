@@ -1,7 +1,7 @@
 import { useCalendar } from './useCalendar';
 import dayjs from 'dayjs';
 
-import { Header } from './components';
+import { AvailableAppointmentsCheckbox, Header } from './components';
 import type { Appointment as AppointmentType } from '@shared/types';
 
 interface DayProps {
@@ -30,11 +30,16 @@ const Day = ({ date, gridCol, appointments = [] }: DayProps) => {
 };
 
 const Calendar = () => {
-  const { appointments, monthYear, updateMonthOfYear } = useCalendar();
+  const { appointments, monthYear, updateMonthOfYear, showAll, setShowAll } =
+    useCalendar();
   console.log(appointments[1]);
 
   return (
     <div className='container '>
+      <AvailableAppointmentsCheckbox
+        setShowAll={setShowAll}
+        showAll={showAll}
+      />
       <Header updateMonth={updateMonthOfYear}>
         <h1>
           {monthYear.monthName} {monthYear.year}
