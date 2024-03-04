@@ -28,6 +28,10 @@
     "iterations": 10000,
     "keylen": 64,
     "digest": "sha512",
-    "id": 3
+    "id": 3,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QwMSIsImlkIjozLCJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpsYldGcGJDSTZJblJsYzNRd01TSXNJbWxrSWpvekxDSnBZWFFpT2pFM01EZzROekk1TVRCOS5GTHdLenZqcm1jbWxDTV9fRXc5YnNxZ0wtQ2szT0tndndQVVFZUWt3ZlRJIiwibmFtZSI6IlRlc3MgUS4gVXNlciIsImFkZHJlc3MiOiI3ODkgRWxtIFN0cmVldCIsInBob25lIjoiNTE4LTU1NS01NTU1IiwiaWF0IjoxNzA4ODk1MzA1fQ.1DdZLst_E-O3xvmFXTAEk7CHEVRnEGm4avOmt9b16o8",
+    "name": "Tess Q. User",
+    "address": "789 Elm Street",
+    "phone": "518-555-5555"
   }
 ]

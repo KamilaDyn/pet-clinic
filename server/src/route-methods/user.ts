@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from "express";
-import db from "../../db-function";
-import { createJWT, hashPassword, passwordIsValid } from "../auth";
-import { AuthUser } from "../types";
-import { User } from "../../../shared/types";
-import jsonwebtoken from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express';
+import db from '../../db-function';
+import { createJWT, hashPassword, passwordIsValid } from '../auth';
+import { AuthUser } from '../types';
+import { User } from '../../../shared/types';
+import jsonwebtoken from 'jsonwebtoken';
 
 function removePasswordAndAddToken(user: AuthUser): User {
   const { salt, keylen, iterations, hash, digest, ...cleanUser } = user;
@@ -20,7 +20,7 @@ async function create(request: Request, response: Response): Promise<Response> {
     const exitingUsers = await db.getUsers();
     const takenEmail = exitingUsers.map((user) => user.email).includes(email);
     if (takenEmail) {
-      return response.status(400).json({ message: "Email is already in use" });
+      return response.status(400).json({ message: 'Email is already in use' });
     }
     const userPasswordData = hashPassword(password);
     const newUser = await db.addUser({ email, ...userPasswordData });
@@ -44,24 +44,26 @@ async function auth(request: Request, response: Response): Promise<Response> {
   );
 
   if (!validUser)
-    return response.status(400).json({ message: "Invalid logins" });
+    return response.status(400).json({ message: 'Invalid logins' });
   const user = removePasswordAndAddToken(validUser);
 
   return response.status(200).json({ user });
 }
 
 async function authMe(request: Request, response: Response) {
-  const token = request.header("Authorization")?.replace("Bearer ", "");
+  const token = request.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {
-    return response.status(403).json({ message: "Access danied" });
+    return response.status(403).json({ message: 'Access danied' });
   }
 
   try {
+    console.log(process.env.EXPRESS_SECRET);
+
     const user = jsonwebtoken.verify(token, process.env.EXPRESS_SECRET);
     return response.json(user);
   } catch (err) {
-    return response.status(401).json({ message: "Invalid token" });
+    return response.status(401).json({ message: 'Invalid token' });
   }
 }
 

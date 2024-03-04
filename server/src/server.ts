@@ -1,7 +1,8 @@
 const PORT = process?.env?.PORT || 5000;
-const app = require("./app");
+const app = require('./app');
 
 export const startUp = async () => {
+  console.log(process?.env?.PORT);
   // create appointments relevant to current date
 
   // eslint-disable-next-line no-console

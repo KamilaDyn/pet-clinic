@@ -3,20 +3,28 @@
   "version": "1.0.0",
   "description": "server for pet clinic ",
   "scripts": {
-    "start": "node src/index.cjs",
-    "dev": "nodemon src/index.cjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc": "tsc",
+    "dev": "ts-node-dev src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .ts ."
   },
   "author": "Kamila Dynysiuk",
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.22.6",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.1",
-    "pbkdf2": "^3.1.2"
+    "express": "^4.18.3",
+    "express-jwt": "^8.4.1",
+    "fast-json-patch": "^3.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.2.0",
+    "mongoose-unique-validator": "^5.0.0",
+    "pbkdf2": "^3.1.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.9",
@@ -26,11 +34,15 @@
     "@babel/preset-typescript": "^7.22.5",
     "@babel/register": "^7.22.5",
     "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.17",
-    "@types/node": "^20.4.5",
-    "nodemon": "^3.0.1",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.20",
+    "@types/uuid": "^9.0.8",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "eslint": "^8.57.0",
+    "nodemon": "^3.1.0",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.6"
-  },
-  "type": "module"
+  }
 }

@@ -1,28 +1,43 @@
-import express, { json } from "express";
-import cors from "cors";
-import servicesRoutes from "./route-methods/services";
-import staffRoutes from "./route-methods/staff";
-import userRoutes from "./route-methods/user";
-import dotenv from "dotenv";
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import config from './utils/config';
+import logger from './utils/logger';
+import appointmentsRouter from './routes/appointmentsRouter';
+import usersRouter from './routes/usersRouter';
+import loginRouter from './routes/loginInRoutes';
+import middlewares from './middlewares';
+import staffRoutes from './routes/staffRoutes';
+import treatmentsRoutes from './routes/treatmentsRoutes';
 
 const app = express();
+
+mongoose
+  .connect(config.MONGO_URL)
+  .then(() => {
+    logger.info('connected to MonoDB');
+  })
+  .catch((error) => {
+    logger.error('error connecting to Mongo DB: ', error.message);
+  });
+
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: 'http://localhost:8080',
     credentials: true,
   })
 );
-app.use(json());
+app.use(express.json());
+app.use('/api/staff', staffRoutes);
+app.use('/api/treatments', treatmentsRoutes);
+app.use('/api/users', usersRouter);
+app.use('/api/login', loginRouter);
+app.use(middlewares.requestLogger);
+app.use(middlewares.tokenExtractor);
+app.use('/api/appointments', middlewares.userExtractor, appointmentsRouter);
 
-dotenv.config();
-const PORT = process?.env?.PORT || 5000;
+app.use(middlewares.unknownEndpoint);
 
-app.post("/api/signin", userRoutes.auth);
-app.get("/api/me", userRoutes.authMe);
+app.use(middlewares.errorHandler);
 
-app.get("/api/services", servicesRoutes.get);
-app.get("/api/staff", staffRoutes.get);
-/* ***users *** */
-app.post("/api/users", userRoutes.create);
-
-module.exports = app;
+export default app;

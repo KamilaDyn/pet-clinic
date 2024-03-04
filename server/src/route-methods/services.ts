@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import services from "../../db/services.json";
+import services from '../../db/services';
 
 export async function get(req: Request, res: Response): Promise<Response> {
   try {
