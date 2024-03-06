@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+const uniqueValidator = require('mongoose-unique-validator');
 
 const appointmentSchema = new mongoose.Schema({
   dateTime: {
@@ -15,6 +16,7 @@ const appointmentSchema = new mongoose.Schema({
   },
 });
 
+appointmentSchema.plugin(uniqueValidator);
 appointmentSchema.set('toJSON', {
   transform: (_document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();

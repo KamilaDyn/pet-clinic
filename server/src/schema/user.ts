@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
   passwordHash: {
     type: String,
   },
+
   appointments: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -75,7 +75,6 @@ appointmentRouter.put('/:id', async (req: tokenRequest, resp: Response) => {
         context: 'query',
       }
     );
-    console.log(newAppointment);
 
     if (!newAppointment) {
       return resp.status(404).json({ error: 'updated appointment not found' });

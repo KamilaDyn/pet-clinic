@@ -16,9 +16,22 @@ usersRouter.get('/', async (_, response) => {
     response.status(500).json({ error: 'Internal server error' });
   }
 });
+usersRouter.get('/:id', async (request, response) => {
+  const userId = request.params.id;
+  try {
+    // without password
+    const user = await User.findById(userId)
+      .populate('appointments', { treatmentName: 1, dateTime: 1 })
+      .select('-passwordHash');
+
+    response.json(user);
+  } catch (error) {
+    response.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 usersRouter.post('/', async (req, resp, next) => {
-  const { username, password, name } = req.body;
+  const { username, password, name, email } = req.body;
   const existingUser = await User.findOne({ username });
 
   try {
@@ -39,11 +52,12 @@ usersRouter.post('/', async (req, resp, next) => {
       username,
       name,
       passwordHash,
+      email,
     });
     const saveUser = await user.save();
     resp.status(201).json(saveUser);
   } catch (error: unknown) {
-    let errorMessage = ' Something went wrong';
+    let errorMessage = ' Something went wrong ';
     if (error instanceof Error) {
       errorMessage += `Error: ${error.message}`;
     }
