@@ -11,8 +11,6 @@ const Appointment = ({
 
   const appointmentHour = dayjs(appointmentData?.dateTime).format('h a');
 
-  console.log(appointmentHour);
-
   return (
     <div className='container'>
       <ul>

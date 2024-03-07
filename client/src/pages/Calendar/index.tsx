@@ -7,24 +7,24 @@ import type { Appointment as AppointmentType } from '@shared/types';
 interface DayProps {
   date: number;
   gridCol?: string;
-  appointments: AppointmentType[];
+  appointments?: AppointmentType[];
 }
 const Day = ({ date, gridCol, appointments = [] }: DayProps) => {
-  const appointmentHour = dayjs(appointments?.dateTime).format('h a');
-  console.log(appointments);
+  // const appointmentHour = dayjs(appointments?.dateTime).format('h a');
 
   return (
     <div
       className={`relative h-36 rounded-md shadow-md w-full ${gridCol || ''} `}
     >
       <div className='absolute right-0 top-0'> {date}</div>
-      {appointments.map((appointment) => (
-        <div className='' key={appointment.id}>
-          <span>{appointmentHour}</span>
-          <h2>{appointment.treatmentName}</h2>
-          <h2></h2>
-        </div>
-      ))}
+      {!!appointments?.length &&
+        appointments.map(({ id, treatmentName, dateTime }) => (
+          <div className='' key={id}>
+            <span>{dayjs(dateTime).format('h a')}</span>
+            <h2>{treatmentName}</h2>
+            <h2></h2>
+          </div>
+        ))}
     </div>
   );
 };
@@ -32,7 +32,16 @@ const Day = ({ date, gridCol, appointments = [] }: DayProps) => {
 const Calendar = () => {
   const { appointments, monthYear, updateMonthOfYear, showAll, setShowAll } =
     useCalendar();
-  console.log(appointments[1]);
+
+  const filterObjectsByDay = (
+    inputArray: AppointmentType[],
+    targetDay: number
+  ) => {
+    return inputArray.filter((item) => {
+      const itemDate = new Date(item.dateTime);
+      return itemDate.getUTCDate() === targetDay;
+    });
+  };
 
   return (
     <div className='container '>
@@ -53,7 +62,11 @@ const Calendar = () => {
         />
         {[...Array(monthYear.endDate)].map((_, i) =>
           i > 0 ? (
-            <Day appointments={appointments[i + 1]} date={i + 1} key={i} />
+            <Day
+              appointments={filterObjectsByDay(appointments, i + 1)}
+              date={i + 1}
+              key={i}
+            />
           ) : null
         )}
       </div>

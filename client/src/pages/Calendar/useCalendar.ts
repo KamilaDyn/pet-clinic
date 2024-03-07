@@ -6,14 +6,21 @@ import { QueryKeys } from '@/react-query/constant';
 import { axiosInstance } from '@/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import { useLoginData } from '@/auth/AuthContext';
-import { AppointmentDateMap } from '@shared/types';
+import {
+  Appointment as AppointmentType,
+  AppointmentDateMap,
+} from '@shared/types';
 import { getAvailableAppointments } from './utils/getAppointments';
+import { getJWTHeader } from '@/axiosInstance';
 
 async function getAppointment(
   year: string,
-  month: string
+  month: string,
+  token: string
 ): Promise<AppointmentDateMap> {
-  const { data } = await axiosInstance.get(`/appointments/${year}/${month}`);
+  const { data } = await axiosInstance.get(`/appointments/${year}/${month}`, {
+    headers: getJWTHeader(token),
+  });
 
   return data;
 }
@@ -21,9 +28,8 @@ async function getAppointment(
 export const useCalendar = () => {
   // get current month and year
   const currentMonthOfYear = getMonthOfYear(dayjs());
-  const { userId } = useLoginData();
+  const { userId, userToken } = useLoginData();
   //state month
-  console.log(userId);
 
   const [monthYear, setMonthOfYear] = useState(currentMonthOfYear);
   const [showAll, setShowAll] = useState(true);
@@ -54,16 +60,16 @@ export const useCalendar = () => {
         nextMonthOfYear.month,
       ],
       queryFn: () =>
-        getAppointment(nextMonthOfYear.year, nextMonthOfYear.month),
+        getAppointment(nextMonthOfYear.year, nextMonthOfYear.month, userToken),
       ...{ staleTime: 0, gcTime: 30000 },
     });
   }, [queryClient, monthYear]);
 
-  const fallback: AppointmentDateMap = {};
+  const fallback: AppointmentDateMap = [];
 
   const { data: appointments = fallback } = useQuery({
     queryKey: [QueryKeys.appointments, monthYear.year, monthYear.month],
-    queryFn: () => getAppointment(monthYear.year, monthYear.month),
+    queryFn: () => getAppointment(monthYear.year, monthYear.month, userToken),
     select: (data) => selectFn(data, showAll),
     refetchOnWindowFocus: true,
     refetchInterval: 60000,

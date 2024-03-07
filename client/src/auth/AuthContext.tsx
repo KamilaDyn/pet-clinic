@@ -15,7 +15,7 @@ type Alert = {
 };
 
 type AuthContextValue = {
-  userId: number;
+  userId: string;
   userToken: string;
   setLoginData: (loginData: LoginData) => void;
   clearLoginData: () => void;
@@ -46,12 +46,13 @@ export const AuthContextProvider = ({
   const [alert, setAlert] = useState<Alert | null>(null);
 
   // can't destructure since loginData might be null
-  const userId = loginData?.userId as number;
+
+  const userId = loginData?.userId as string;
   const userToken = loginData?.userToken as string;
 
-  const setLoginData = ({ userId, userToken }: LoginData) => {
-    setLoginDataRaw({ userId, userToken });
-    setTokenUser({ userId, userToken });
+  const setLoginData = (data: LoginData) => {
+    setLoginDataRaw(data);
+    setTokenUser(data);
   };
 
   const clearLoginData = () => {

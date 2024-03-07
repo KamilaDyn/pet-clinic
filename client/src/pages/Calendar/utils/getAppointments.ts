@@ -8,7 +8,7 @@ export const appointmentInPast = (appointmentData: Appointment): boolean => {
 
 export function getAvailableAppointments(
   appointments: AppointmentDateMap,
-  userId: number | null
+  userId: string | null
 ) {
   const filteredAppointments = { ...appointments };
 

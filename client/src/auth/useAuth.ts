@@ -10,8 +10,14 @@ import { useLoginData } from './AuthContext';
 import { User } from '@shared/types';
 import { useUser } from '@/common/user/useUser';
 
-type UserResponse = { user: { id: number; token: string } };
-type ErrorResponse = { message: string };
+type UserResponse = {
+  token: string;
+  name: string;
+  id: string;
+};
+type ErrorResponse = {
+  message: string;
+};
 type AuthResponseType = UserResponse | ErrorResponse;
 
 export function useAuth() {
@@ -19,7 +25,7 @@ export function useAuth() {
   const { updateUser, clearUser } = useUser();
   async function authServerCall(
     urlEndpoint: string,
-    email: string,
+    username: string,
     password: string
   ): Promise<void> {
     try {
@@ -27,7 +33,7 @@ export function useAuth() {
         await axiosInstance({
           url: urlEndpoint,
           method: 'POST',
-          data: { email, password },
+          data: { username, password },
           headers: { 'Content-Type': 'application/json' },
         });
 
@@ -37,13 +43,15 @@ export function useAuth() {
         return;
       }
 
-      if ('user' in data && 'token' in data.user) {
+      if ('id' in data && 'token' in data) {
         console.log('data', data);
       }
 
-      updateUser(data.user);
-      setLoginData({ userId: data.user.id, userToken: data.user.token });
-      setAlert(null);
+      if (status === 200 && 'id' in data && 'token' in data) {
+        updateUser(data);
+        setLoginData({ userId: data.id, userToken: data.token });
+        setAlert(null);
+      }
     } catch (errorResponse) {
       const title =
         axios.isAxiosError(errorResponse) &&
@@ -54,7 +62,7 @@ export function useAuth() {
     }
   }
   async function signin(email: string, password: string): Promise<void> {
-    authServerCall('/signin', email, password);
+    authServerCall('/login', email, password);
   }
 
   function signout(): void {

@@ -9,15 +9,15 @@ import { QueryKeys } from '@/react-query/constant';
 import { generateUserKey } from '@/react-query/key-factories';
 
 // query function
-async function getUser(userId: number, userToken: string) {
-  const { data }: AxiosResponse<{ user: User }> = await axiosInstance.get(
-    `/user/${userId}`,
+async function getUser(userId: string, token: string) {
+  const { data }: AxiosResponse<User> = await axiosInstance.get(
+    `/users/${userId}`,
     {
-      headers: getJWTHeader(userToken),
+      headers: getJWTHeader(token),
     }
   );
 
-  return data.user;
+  return data;
 }
 
 export function useUser() {

@@ -1,4 +1,6 @@
 export type LoginData = {
-  userId: number;
+  username?: string;
   userToken: string;
+  name?: string;
+  userId: string;
 };

@@ -17,11 +17,11 @@ const useSignIn = () => {
   const { userId } = useLoginData();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (userId) {
-      navigate(`/user/${userId}`);
-    }
-  }, [userId, navigate]);
+  // useEffect(() => {
+  //   if (userId) {
+  //     navigate(`/user/${userId}`);
+  //   }
+  // }, [userId, navigate]);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
