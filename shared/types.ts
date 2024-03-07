@@ -1,5 +1,5 @@
 export interface Id {
-  id: number;
+  id: string;
 }
 
 export interface Image {
@@ -23,7 +23,7 @@ export interface Staff extends Id {
 }
 
 export interface NewUser {
-  email: string;
+  email?: string;
   name?: string;
   address?: string;
   phone?: string;
@@ -31,3 +31,9 @@ export interface NewUser {
 }
 
 export type User = Id & NewUser;
+export interface Appointment extends Id {
+  dateTime: Date;
+  treatmentName: string;
+  userId?: string;
+}
+export type AppointmentDateMap = Record<number, Appointment[]>;
