@@ -10,6 +10,9 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  reserved: {
+    type: Boolean,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

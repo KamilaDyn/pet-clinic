@@ -18,7 +18,6 @@ const addAppointment = (appointment: NewAppointment) => {
     id: id,
     ...appointment,
   };
-  console.log(newAppointment);
 
   if (appointment) {
     appointments.push(newAppointment);
@@ -31,7 +30,6 @@ const deleteAppointment = (id: string) => {
   const appointment = appointments.find(
     (appointment) => String(appointment.id) === id
   );
-  console.log(appointment);
 
   if (appointment) {
     appointments.filter((appoitment) => appoitment.id !== id);

@@ -5,14 +5,34 @@ import { tokenRequest } from '../types/express';
 
 const appointmentRouter = express.Router();
 
-appointmentRouter.get('/', async (_request: tokenRequest, response) => {
-  const appointments = await Appointment.find({}).populate('user', {
-    username: 1,
-    name: 1,
-  });
+appointmentRouter.get(
+  '/:year/:month',
+  async (request: tokenRequest, response) => {
+    try {
+      const { year, month } = request.params;
 
-  response.json(appointments);
-});
+      const yearInt = parseInt(year);
+      const monthInt = parseInt(month);
+      const startDate = new Date(yearInt, monthInt - 1, 1);
+      const endDate = new Date(yearInt, monthInt, 0);
+
+      const appointments = await Appointment.find({
+        dateTime: {
+          $gte: startDate.toISOString(),
+          $lt: endDate.toISOString(),
+        },
+      }).populate('user', {
+        username: 1,
+        name: 1,
+      });
+
+      response.json(appointments);
+    } catch (error) {
+      console.error(error);
+      response.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+);
 
 appointmentRouter.get('/:id', async (req, resp) => {
   const id = req.params.id;
@@ -32,6 +52,7 @@ appointmentRouter.post('/', async (req, resp, next) => {
     const appointment = new Appointment({
       dateTime: body.dateTime,
       treatmentName: body.treatmentName,
+      reserved: false,
     });
     const saveAppointment = await appointment.save();
     resp.status(200).json(saveAppointment);
@@ -47,7 +68,6 @@ appointmentRouter.post('/', async (req, resp, next) => {
 
 appointmentRouter.put('/:id', async (req: tokenRequest, resp: Response) => {
   const appointmentId = req.params.id;
-  const { treatmentName, dateTime } = req.body;
 
   const user = req.user;
   if (!user) {
@@ -61,9 +81,8 @@ appointmentRouter.put('/:id', async (req: tokenRequest, resp: Response) => {
     }
 
     const reserveAppointment = {
-      treatmentName: treatmentName,
-      dateTime: dateTime,
       user: user._id,
+      reserved: !appointment.reserved,
     };
 
     const newAppointment = await Appointment.findByIdAndUpdate(

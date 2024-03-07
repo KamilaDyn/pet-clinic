@@ -30,10 +30,10 @@ app.use(
 app.use(express.json());
 app.use('/api/staff', staffRoutes);
 app.use('/api/treatments', treatmentsRoutes);
-app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 app.use(middlewares.requestLogger);
 app.use(middlewares.tokenExtractor);
+app.use('/api/users', usersRouter);
 app.use('/api/appointments', middlewares.userExtractor, appointmentsRouter);
 
 app.use(middlewares.unknownEndpoint);

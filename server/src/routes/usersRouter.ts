@@ -1,7 +1,8 @@
-import express from 'express';
 import User from '../schema/user';
-const bcrypt = require('bcryptjs');
 
+import express from 'express';
+
+const bcrypt = require('bcryptjs');
 const usersRouter = express.Router();
 
 usersRouter.get('/', async (_, response) => {
@@ -20,6 +21,7 @@ usersRouter.get('/:id', async (request, response) => {
   const userId = request.params.id;
   try {
     // without password
+
     const user = await User.findById(userId)
       .populate('appointments', { treatmentName: 1, dateTime: 1 })
       .select('-passwordHash');
@@ -32,6 +34,7 @@ usersRouter.get('/:id', async (request, response) => {
 
 usersRouter.post('/', async (req, resp, next) => {
   const { username, password, name, email } = req.body;
+
   const existingUser = await User.findOne({ username });
 
   try {
@@ -53,6 +56,7 @@ usersRouter.post('/', async (req, resp, next) => {
       name,
       passwordHash,
       email,
+      appointments: [],
     });
     const saveUser = await user.save();
     resp.status(201).json(saveUser);
@@ -65,6 +69,7 @@ usersRouter.post('/', async (req, resp, next) => {
     next();
   }
 });
+
 usersRouter.put('/', async (req, resp, next) => {
   const { username, password, name } = req.body;
   const existingUser = await User.findOne({ username });
