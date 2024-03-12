@@ -7,7 +7,6 @@ const usersRouter = express.Router();
 usersRouter.put('/:id', async (req, resp, next) => {
   const userId = req.params.id;
   const { appointmentsId } = req.body;
-
   const authorizationHeader = req.headers['authorization'];
 
   try {
@@ -54,7 +53,11 @@ usersRouter.put('/:id', async (req, resp, next) => {
       return;
     }
 
-    if (appointment && appointment.reserved && user?.id !== appointment.user) {
+    if (
+      appointment &&
+      appointment.reserved &&
+      user?._id !== appointment.user?._id
+    ) {
       resp.status(400).send({ error: 'Appointment is actually reserved' });
       return;
     }

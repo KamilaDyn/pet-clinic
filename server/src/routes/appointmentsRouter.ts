@@ -1,4 +1,5 @@
 import express, { Response } from 'express';
+import mongoose from 'mongoose';
 
 import Appointment from '../schema/appoitments';
 import { tokenRequest } from '../types/express';
@@ -75,17 +76,20 @@ appointmentRouter.put('/:id', async (req: tokenRequest, resp: Response) => {
       return resp.status(404).json({ error: 'appointment not found' });
     }
 
-    console.log(
-      'user._id, appointment?.user',
-      String(user._id),
-      String(appointment?.user),
-      String(user._id) !== String(appointment?.user)
-    );
-
     if (appointment?.user && String(user._id) !== String(appointment?.user)) {
       return resp
         .status(400)
         .json({ error: 'appointment is reserved, choose different time' });
+    }
+
+    let update = {};
+
+    if (appointment.user && appointment.user.equals(user._id)) {
+      update = { $unset: { user: '' }, $set: { reserved: false } };
+    } else {
+      const userObjectId = new mongoose.Types.ObjectId(user._id);
+      // If the user is not reserved, add or update the user key
+      update = { $set: { user: user._id, reserved: true } };
     }
 
     const reserveAppointment = {
@@ -95,7 +99,7 @@ appointmentRouter.put('/:id', async (req: tokenRequest, resp: Response) => {
 
     const newAppointment = await Appointment.findByIdAndUpdate(
       appointmentId,
-      reserveAppointment,
+      update,
       {
         new: true,
         runValidators: true,
