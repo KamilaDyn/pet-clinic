@@ -36,9 +36,10 @@ loginRouter.post('/', async (request, response) => {
     // );
     // const user2 = await User.findById(decodedToken.id);
     if (process.env.EXPRESS_SECRET) {
-      const token = jwt.sign(userToken, process.env.EXPRESS_SECRET);
-      const decoded = jwt.verify(token, process.env.EXPRESS_SECRET);
-      console.log(decoded);
+      const token = jwt.sign(userToken, process.env.EXPRESS_SECRET, {
+        expiresIn: 60 * 60 * 24,
+      });
+
       return response.status(200).send({
         token,
         username: user.username,
