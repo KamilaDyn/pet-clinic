@@ -5,34 +5,29 @@ import { tokenRequest } from '../types/express';
 
 const appointmentRouter = express.Router();
 
-appointmentRouter.get(
-  '/:year/:month',
-  async (request: tokenRequest, response) => {
-    try {
-      const { year, month } = request.params;
+appointmentRouter.get('/:year/:month', async (request, response) => {
+  try {
+    const { year, month } = request.params;
 
-      const yearInt = parseInt(year);
-      const monthInt = parseInt(month);
-      const startDate = new Date(yearInt, monthInt - 1, 1);
-      const endDate = new Date(yearInt, monthInt, 0);
+    const yearInt = parseInt(year);
+    const monthInt = parseInt(month);
+    const startDate = new Date(yearInt, monthInt - 1, 1);
+    const endDate = new Date(yearInt, monthInt, 0);
 
-      const appointments = await Appointment.find({
-        dateTime: {
-          $gte: startDate.toISOString(),
-          $lt: endDate.toISOString(),
-        },
-      }).populate('user', {
-        username: 1,
-        name: 1,
-      });
+    const appointments = await Appointment.find({
+      dateTime: {
+        $gte: startDate.toISOString(),
+        $lt: endDate.toISOString(),
+      },
+    });
 
-      response.json(appointments);
-    } catch (error) {
-      console.error(error);
-      response.status(500).json({ error: 'Internal Server Error' });
-    }
+    response.json(appointments);
+  } catch (error) {
+    console.log('error', error);
+
+    response.status(500).send({ error: 'Internal Server Error' });
   }
-);
+});
 
 appointmentRouter.get('/:id', async (req, resp) => {
   const id = req.params.id;
@@ -78,6 +73,19 @@ appointmentRouter.put('/:id', async (req: tokenRequest, resp: Response) => {
 
     if (!appointment) {
       return resp.status(404).json({ error: 'appointment not found' });
+    }
+
+    console.log(
+      'user._id, appointment?.user',
+      String(user._id),
+      String(appointment?.user),
+      String(user._id) !== String(appointment?.user)
+    );
+
+    if (appointment?.user && String(user._id) !== String(appointment?.user)) {
+      return resp
+        .status(400)
+        .json({ error: 'appointment is reserved, choose different time' });
     }
 
     const reserveAppointment = {

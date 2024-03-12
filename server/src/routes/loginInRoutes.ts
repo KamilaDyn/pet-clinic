@@ -1,12 +1,13 @@
 import User from '../schema/user';
 import express from 'express';
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
+
 const bcrypt = require('bcryptjs');
 
 const loginRouter = express.Router();
 // const getTokenFrom = (request: any) => {
 //   const authorization = request.get('authorization');
-//   if (authorization && authorization.startsWith('Bearer ')) {
+//   if (authorization && authorization.toLowerCase().startsWith('Bearer ')) {
 //     return authorization.replace('Bearer ', '');
 //   }
 
@@ -29,16 +30,25 @@ loginRouter.post('/', async (request, response) => {
       username: user.username,
       id: user._id,
     };
-    // const decodedToken = jwt.verify(getTokenFrom(request), process.env.EXPRESS_SECRET);
+    // const decodedToken = jwt.verify(
+    //   getTokenFrom(request),
+    //   process.env.EXPRESS_SECRET
+    // );
     // const user2 = await User.findById(decodedToken.id);
-
-    const token = jwt.sign(userToken, process.env.EXPRESS_SECRET, {
-      expiresIn: 60 * 60 * 24,
+    if (process.env.EXPRESS_SECRET) {
+      const token = jwt.sign(userToken, process.env.EXPRESS_SECRET);
+      const decoded = jwt.verify(token, process.env.EXPRESS_SECRET);
+      console.log(decoded);
+      return response.status(200).send({
+        token,
+        username: user.username,
+        name: user.name,
+        id: user._id,
+      });
+    }
+    response.status(400).send({
+      error: 'not found',
     });
-
-    return response
-      .status(200)
-      .send({ token, username: user.username, name: user.name, id: user._id });
   } catch (error: unknown) {
     let errorMessage = 'Something went wrong ';
     if (error instanceof Error) {

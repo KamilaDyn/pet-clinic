@@ -1,9 +1,11 @@
 import User from '../schema/user';
 
-import express from 'express';
+// import express from 'express';
 
 const bcrypt = require('bcryptjs');
-const usersRouter = express.Router();
+// const usersRouter = express.Router();
+
+import usersRouter from './user/editUser';
 
 usersRouter.get('/', async (_, response) => {
   try {

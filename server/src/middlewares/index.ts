@@ -2,13 +2,15 @@ import logger from '../utils/logger';
 import User from '../schema/user';
 import { Request, Response, NextFunction } from 'express';
 import { User as UserType } from '../types/user';
+import jwt from 'jsonwebtoken';
 
 interface tokenRequest extends Request {
   token?: string | null;
   user?: UserType | null;
 }
-const jwt = require('jsonwebtoken');
-
+interface JwtPayload {
+  id: string;
+}
 const requestLogger = (request: Request, _: Response, next: NextFunction) => {
   logger.info('Method:', request.method);
   logger.info('Path:  ', request.path);
@@ -27,7 +29,7 @@ const tokenExtractor = (
   next: NextFunction
 ): void => {
   const authorization = request.headers['authorization'];
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+  if (authorization && authorization.startsWith('Bearer ')) {
     request.token = authorization.substring(7);
   } else {
     request.token = null;
@@ -38,20 +40,31 @@ const tokenExtractor = (
 
 const userExtractor = async (
   request: tokenRequest,
-  _: Response,
+  response: Response,
   next: NextFunction
 ) => {
   if (!request.token) {
     request.user = null;
   } else {
-    const decodedToken = jwt.verify(request.token, process.env.EXPRESS_SECRET);
-    if (!decodedToken.id) {
-      request.user = null;
+    if (process.env.EXPRESS_SECRET) {
+      try {
+        const decodedToken = jwt.verify(
+          request.token,
+          process.env.EXPRESS_SECRET
+        ) as JwtPayload;
+        if (!decodedToken.id) {
+          request.user = null;
+        } else {
+          request.user = await User.findById(decodedToken.id);
+        }
+        next();
+      } catch (err) {
+        response.status(400).json({ error: err });
+      }
     } else {
-      request.user = await User.findById(decodedToken.id);
+      next();
     }
   }
-  next();
 };
 const errorHandler = (
   error: any,

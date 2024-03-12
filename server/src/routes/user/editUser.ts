@@ -54,7 +54,7 @@ usersRouter.put('/:id', async (req, resp, next) => {
       return;
     }
 
-    if (appointment && appointment.reserved) {
+    if (appointment && appointment.reserved && user?.id !== appointment.user) {
       resp.status(400).send({ error: 'Appointment is actually reserved' });
       return;
     }
