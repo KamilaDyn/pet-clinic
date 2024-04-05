@@ -4,4 +4,5 @@ export enum QueryKeys {
   user = 'user',
   me = 'me',
   appointments = 'appointments',
+  singleAppointment = 'appointment',
 }

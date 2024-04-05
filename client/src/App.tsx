@@ -1,6 +1,14 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, SignIn, User, Staff, Treatments, Calendar } from '@/pages';
+import {
+  Home,
+  SignIn,
+  User,
+  Staff,
+  Treatments,
+  Calendar,
+  UserAppointment,
+} from '@/pages';
 import { AuthContextProvider } from './auth/AuthContext';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -22,6 +30,7 @@ function App() {
               <Route path='/staff' element={<Staff />} />
               <Route path='/treatments' element={<Treatments />} />
               <Route path='/calendar' element={<Calendar />} />
+              <Route path='/user/appointments' element={<UserAppointment />} />
             </Routes>
           </BrowserRouter>
         </AuthContextProvider>

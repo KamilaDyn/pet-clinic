@@ -11,7 +11,7 @@ export const MUTATION_KEY = 'edit-user';
 
 async function patchUserOnServer(
   newData: User | null,
-  originalData: User | null
+  originalData: User | undefined
 ): Promise<User | null> {
   if (!newData || !originalData) return null;
   // create a patch for the difference between newData and originalData

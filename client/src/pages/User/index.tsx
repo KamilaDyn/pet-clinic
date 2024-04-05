@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { Button, Subtitle, Title } from '@/common/atoms';
+import { Button, Subtitle } from '@/common/atoms';
 import { Card, Input } from '@/common/molecules';
 import { Form, Formik, FormikProps } from 'formik';
 import { useUser } from '@/common/user/useUser';
 import { useInfoUser } from './useInfoUser';
 import { useNavigate } from 'react-router-dom';
 import { useLoginData } from '@/auth/AuthContext';
+
 interface FormValues {
   name: string;
   address: string;
@@ -18,8 +19,6 @@ const User = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // use login data for redirect, for base app that doesn't
-    //   retrieve user data from the server yet
     if (!userId) {
       navigate('/signin');
     }
@@ -33,12 +32,9 @@ const User = () => {
     address: user?.address || '',
     phone: user?.phone || '',
   };
+
   return (
-    <div className='container flex flex-col justify-center items-center w-10/12 mx-auto py-16 '>
-      <div className='container mb-16 '>
-        <Title>Your Appointments</Title>
-        <div className='appointments'>none</div>
-      </div>
+    <div className='container flex  justify-center  w-10/12 mx-auto py-16 '>
       <div className='user-account w-full flex flex-col justify-center items-center gap-6'>
         <Subtitle>User account information</Subtitle>
         <Card title='Information'>

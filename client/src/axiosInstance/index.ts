@@ -3,7 +3,9 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 const config: AxiosRequestConfig = { baseURL: baseUrl };
 
-export function getJWTHeader(token: string): Record<string, string> {
+export function getJWTHeader(
+  token: string | undefined
+): Record<string, string> {
   return { Authorization: `Bearer ${token}` };
 }
 

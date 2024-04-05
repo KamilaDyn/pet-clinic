@@ -21,6 +21,8 @@ type AuthContextValue = {
   clearLoginData: () => void;
   alert: Alert | null;
   setAlert: Dispatch<SetStateAction<Alert | null>>;
+  openModal: boolean;
+  toggleModal: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -44,6 +46,7 @@ export const AuthContextProvider = ({
     getTokenUser()
   );
   const [alert, setAlert] = useState<Alert | null>(null);
+  const [openModal, setOpenModal] = useState(false);
 
   // can't destructure since loginData might be null
 
@@ -53,6 +56,10 @@ export const AuthContextProvider = ({
   const setLoginData = (data: LoginData) => {
     setLoginDataRaw(data);
     setTokenUser(data);
+  };
+
+  const toggleModal = () => {
+    setOpenModal((prev) => !prev);
   };
 
   const clearLoginData = () => {
@@ -67,6 +74,8 @@ export const AuthContextProvider = ({
     setLoginData,
     alert,
     setAlert,
+    openModal,
+    toggleModal,
   };
 
   return (

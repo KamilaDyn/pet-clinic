@@ -13,11 +13,20 @@ export function getMonthOfYear(initialDate: dayjs.Dayjs): MonthYear {
   const year = initialDate.format('YYYY');
   const startDate = dayjs(`${year}${month}01`);
   const firstDayOfWeek = Number(startDate.format('d'));
+  const dayName = initialDate.format('dddd');
 
   const endDate = Number(startDate.clone().endOf('month').format('DD'));
   const monthName = startDate.format('MMMM');
 
-  return { startDate, firstDayOfWeek, endDate, monthName, month, year };
+  return {
+    startDate,
+    firstDayOfWeek,
+    endDate,
+    monthName,
+    month,
+    year,
+    dayName,
+  };
 }
 // get next month
 export function getNewMonthOfYear(

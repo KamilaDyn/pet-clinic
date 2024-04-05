@@ -36,12 +36,18 @@ const Header = () => {
             </Link>
           </li>
           {user && (
-            <li className='nav-item'>
-              {' '}
-              <Link className='nav-link' to={`/user/${userId}`}>
-                Account
-              </Link>
-            </li>
+            <>
+              <li className='nav-item'>
+                <Link className='nav-link' to={`/user/${userId}`}>
+                  Account
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link className='nav-link' to={`/user/appointments`}>
+                  Appointments
+                </Link>
+              </li>
+            </>
           )}
         </ul>
         {user && <Button text='Logout' handleClick={signout} />}

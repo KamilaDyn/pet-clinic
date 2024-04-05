@@ -7,4 +7,5 @@ export interface MonthYear {
   monthName: string;
   month: string;
   year: string;
+  dayName: string;
 }
